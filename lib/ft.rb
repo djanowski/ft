@@ -14,15 +14,10 @@ class FusionTables
       end
     end
 
+    # Queries the Fusion Tables API with the given SQL and returns an
+    # array of arrays for rows and columns.
     def query(sql)
-      url = URL.dup
-
-      if @token
-        http.headers["Authorization"] = "GoogleLogin auth=#{@token}"
-      end
-
-      url.query = "sql=#{URI.escape(sql)}"
-      res = http.request(url)
+      res = process_sql(sql)
 
       case res
       when Net::HTTPOK
@@ -72,6 +67,28 @@ class FusionTables
     # and the like.
     def inspect
       "#<#{self.class}>"
+    end
+
+  protected
+
+    # Takes SQL and queries the Fusion Tables API.
+    def process_sql(sql)
+      url = URL.dup
+
+      if @token
+        http.headers["Authorization"] = "GoogleLogin auth=#{@token}"
+      end
+
+      if sql =~ /^select/i
+        url.query = "sql=#{URI.escape(sql)}"
+        res = http.request(url)
+      else
+        req = Net::HTTP::Post.new(url.path)
+        req.set_form_data(sql: sql)
+        res = http.request(url, req)
+      end
+
+      res
     end
   end
 end

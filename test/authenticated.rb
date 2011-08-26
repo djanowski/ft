@@ -19,3 +19,30 @@ test "authenticated SELECTs" do |conn, email, password, table_id|
 
   assert conn.inspect !~ /token/
 end
+
+test "INSERT" do |conn, email, password, table_id|
+  conn.authenticate(email, password)
+
+  begin
+    result = conn.query("INSERT INTO #{table_id} (Client) VALUES ('Foo')")
+
+    assert_equal result[0][0], "rowid"
+    assert result[1][0] =~ /^\d+$/
+  ensure
+    conn.query("DELETE FROM #{table_id} WHERE ROWID = '#{result[1][0]}'") if result
+  end
+end
+
+test "DELETE" do |conn, email, password, table_id|
+  conn.authenticate(email, password)
+
+  result = conn.query("INSERT INTO #{table_id} (Client) VALUES ('Foo')")
+
+  rowid = result[1][0]
+
+  conn.query("DELETE FROM #{table_id} WHERE ROWID = '#{rowid}'")
+
+  result = conn.query("SELECT ROWID FROM #{table_id} WHERE ROWID = '#{rowid}'")
+
+  assert_equal result[1], nil
+end
