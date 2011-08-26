@@ -22,6 +22,8 @@ class FusionTables
       case res
       when Net::HTTPOK
         CSV.parse(res.body.force_encoding(Encoding::UTF_8))
+      when Net::HTTPFound
+        raise Error.new("Authentication required. See #{self.class}#authenticate")
       when Net::HTTPBadRequest
         message = CGI.unescapeHTML(res.body[%r[<title>(.*)</title>]i, 1])
         raise Error.new("#{message}. SQL was: #{sql}")

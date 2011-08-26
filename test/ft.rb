@@ -16,3 +16,9 @@ test "raises errors" do |conn|
     conn.query("SELECT foo FROM 1310767")
   end
 end
+
+test "raises on authentication errors" do |conn|
+  assert_raise FusionTables::Error do
+    conn.query("INSERT INTO 1310767 (Name) VALUES ('Foo')")
+  end
+end
