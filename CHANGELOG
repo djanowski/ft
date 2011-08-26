@@ -1,0 +1,12 @@
+0.0.2 - 2011-08-26
+
+* Added a helper method to quote strings the way Fusion likes it.
+
+* Implemented support for non-SELECT queries.
+
+* You can now make authenticated calls by using
+FusionTables::Connection#authenticate.
+
+0.0.1 - 2011-08-18
+
+* Initial release supporting SELECTs on public tables.
