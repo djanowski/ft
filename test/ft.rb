@@ -22,3 +22,7 @@ test "raises on authentication errors" do |conn|
     conn.query("INSERT INTO 1310767 (Name) VALUES ('Foo')")
   end
 end
+
+test "quoting" do |conn|
+  assert_equal FusionTables::Connection.quote("C'mon"), %q{'C\'mon'}
+end

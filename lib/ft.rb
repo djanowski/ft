@@ -71,6 +71,11 @@ class FusionTables
       "#<#{self.class}>"
     end
 
+    # Safely quotes a value.
+    def self.quote(value)
+      "'#{value.to_s.gsub("'", "\\\\'")}'"
+    end
+
   protected
 
     # Takes SQL and queries the Fusion Tables API.
