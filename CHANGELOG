@@ -1,3 +1,7 @@
+0.0.3 - 2011-08-29
+
+* Querying the Fusion Tables API is now done via HTTPS.
+
 0.0.2 - 2011-08-26
 
 * Added a helper method to quote strings the way Fusion likes it.

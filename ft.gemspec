@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = "ft"
-  s.version           = "0.0.2"
+  s.version           = "0.0.3"
   s.summary           = "Low-level interface to Google's Fusion Tables + CLI tool"
   s.authors           = ["Damian Janowski"]
   s.email             = ["djanowski@dimaion.com"]
