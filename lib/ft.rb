@@ -6,7 +6,7 @@ class FusionTables
   Error = Class.new(RuntimeError)
 
   class Connection
-    URL = URI.parse("http://tables.googlelabs.com/api/query")
+    URL = URI.parse("https://tables.googlelabs.com/api/query")
 
     def http
       @http ||= Net::HTTP::Persistent.new("fusiontables").tap do |http|
